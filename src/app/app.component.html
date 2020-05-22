@@ -22,7 +22,7 @@
           <a class="nav-link" href="#">Inventario</a>
         </li>
       </ul>
-      <ul class="navbar-nav navbar-toggler-right">
+      <ul class="navbar-nav navbar-toggler-right" *ngIf="!identity">
         <li class="nav-item active">
           <a class="nav-link" [routerLink]="['/login']">Identificate <span class="sr-only">(current)</span></a>
         </li>
@@ -30,7 +30,7 @@
           <a class="nav-link" [routerLink]="['/register']">Resgistrate</a>
         </li>
       </ul>
-      <ul class="navbar-nav navbar-toggler-right">
+      <ul class="navbar-nav navbar-toggler-right" *ngIf="identity && identity.name">
        <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Acciones
@@ -47,7 +47,10 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Nombre del usuario</a>
+        <a class="nav-link disabled"  *ngIf="identity && identity.name">{{identity.name + ' '+ identity.surname}}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" [routerLink]="['/logout/1']" *ngIf="identity && identity.name">Cerrar sesion</a>
       </li>
     </ul>
     </div>

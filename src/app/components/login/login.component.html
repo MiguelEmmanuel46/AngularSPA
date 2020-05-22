@@ -1,2 +1,21 @@
-<h1>{{page_title}}</h1>
+<div class="col-md-12 mt-3">
+	<h1>{{page_title}}</h1>
+	<p>Ingresa</p>
+	<form class="col-md-5 ml-0 pl-0" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+		<div class="form-group">
+			<label class="form-check-label" for="email">Correo electronico</label>
+			<input type="email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  class="form-control" name="email" #email="ngModel" [(ngModel)]="user.email" required />
+			<small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">El email no es valido</small>
+		</div>
+		<div class="form-group">
+			<label class="form-check-label" for="password">Contraseña</label>
+			<input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="user.password" required >
+			<small *ngIf="!password.valid && password.touched" class="invalid-feedback d-block">La password no es valida</small>
+		</div>
+		<input type="submit" class="btn btn-success"  value="Log in" [disabled]="loginForm.invalid">
+	</form>
+</div>
+
+
+
 
