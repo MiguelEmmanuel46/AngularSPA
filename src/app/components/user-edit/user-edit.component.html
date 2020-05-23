@@ -1,0 +1,69 @@
+<div class="col-md-12 mt-3">
+	<h1>{{page_title}}</h1>
+	<p *ng-if="status != 'success'">
+		Modifica tus datos personales de usuario.
+	</p>
+	<div class="alert alert-success" *ngIf="status == 'success'">
+		<p>¡Los datos se han guardado correctamente!</p>
+		
+	</div>
+		<div class="alert alert-danger" *ngIf="status == 'error'">
+		<p>¡Los datos no se han guardado</p>
+		
+	</div>
+	<hr style="color: blue;">
+	<form class="col-md-5 ml-0 pl-0" #userEditForm="ngForm" (ngSubmit)="onSubmit(userEditForm)">
+		<div class="form-group">
+			<label class="form-check-label" for="name">Nombre del usuario</label>
+			<input type="text" class="form-control" name="name" #name="ngModel" [(ngModel)]="user.name"  >
+			<small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">El nombre no es valido</small>
+		</div>
+		<div class="form-group">
+			<label class="form-check-label" for="surname">Apellido</label>
+			<input type="text" class="form-control" name="surname" #surname="ngModel" [(ngModel)]="user.surname"  >
+			<small *ngIf="!surname.valid && surname.touched" class="invalid-feedback d-block">El apellido no es valido</small>
+		</div>
+		<div class="form-group">
+			<label class="form-check-label" for="role">Rol</label>
+			<input type="text" class="form-control" name="role" value="employee" readonly="true">
+			
+		</div>
+		<div class="form-group">
+			<label class="form-check-label" for="email">Correo electronico</label>
+			<input type="email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  class="form-control" name="email" #email="ngModel" [(ngModel)]="user.email"  />
+			<small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">El email no es valido</small>
+		</div>
+		<div class="form-group">
+			<label class="form-check-label" for="description">Descripcion</label>
+
+			<textarea [froalaEditor]="froala_options" class="form-control" name="description" #description="ngModel" [(ngModel)]="user.description"  ></textarea>
+
+			
+		</div>
+
+
+		<div class="form-group">
+			<label class="form-check-label" for="image">Avatar</label>
+			<div *ngIf="identity && identity.image">
+				<img src="{{ url + 'user/avatar/' + identity.image }}" alt="" class="avatar_edit" />
+			</div>
+			<angular-file-uploader
+			      [config]="afuConfig"
+			      
+			      (ApiResponse)="avatarUpload($event)">
+			</angular-file-uploader>
+			
+		</div>
+		<!--<p>
+			<label class="form-check-label" for="description"></label>
+			<input type="text" class="form-control" name="description">
+		</p>
+		<p>
+			<label class="form-check-label" for="image"></label>
+			<input type="file" class="form-control" name="image">
+		</p>-->
+		<input type="submit" class="btn btn-success"  value="Guardar cambios" [disabled]="userEditForm.invalid">
+	</form>
+</div>
+
+
